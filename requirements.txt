@@ -1,0 +1,9 @@
+duckduckgo-search
+openai
+agno
+lancedb 
+tantivy 
+pypdf
+yfinance
+smolagents
+groq
