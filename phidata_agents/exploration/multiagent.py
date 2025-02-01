@@ -46,6 +46,10 @@ agent_team = Agent(
     show_tool_calls= True,
     markdown= True,
     debug_mode=True,
+    model = Groq(
+        id = "llama-3.2-1b-preview",
+        api_key= GROQ_API,
+    ),
     description=f"""
 Role: Quantitative Analyst with expert in creating the Trading strategies using News, and companies information.
 your task is to create the Trading strategies for the provided company name provide by the user and you can ask the user to about senarios for 
@@ -53,3 +57,9 @@ your reference that will help to generate the Trading strategies.
 """,
 
 )
+
+while True:
+    input_text = input("Enter your query string: \n\n")
+    if input_text == "exit":
+        break
+    agent_team.print_response(input_text)
