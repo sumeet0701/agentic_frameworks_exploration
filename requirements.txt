@@ -7,3 +7,9 @@ pypdf
 yfinance
 smolagents
 groq
+newspaper4k
+lxml_html_clean 
+sqlalchemy 
+psycopg[binary]
+pgvector 
+sentence-transformers
