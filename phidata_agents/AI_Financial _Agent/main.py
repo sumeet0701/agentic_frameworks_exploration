@@ -6,7 +6,7 @@ console = Console()
 # Initialize the agent once, outside the loop
 
 
-web_search_agent = WebSearchAgent([])
+# web_search_agent = WebSearchAgent([])
 conversation_history = []
 
 while True:
@@ -19,7 +19,7 @@ while True:
 
     conversation_history.append({"role": "user", "content": input_text})
     # Update the conversation history in the existing agent
-    web_search_agent.query = input_text
+    web_search_agent = WebSearchAgent(input_text)
     response = web_search_agent.web_search_agent()
 
     conversation_history.append({"role": "assistant", "content": response})

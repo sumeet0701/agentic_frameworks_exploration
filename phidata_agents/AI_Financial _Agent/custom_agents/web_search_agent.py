@@ -33,7 +33,9 @@ class WebSearchAgent:
                 tools=[DuckDuckGoTools(), Newspaper4kTools()],
                 
             )
-            return self
+            response =  self.web_search_agent.print_response(self.query)
+            return response
+        
             
         except Exception as e:
             logger.error(f"Error in web_search_agent: {e}")
