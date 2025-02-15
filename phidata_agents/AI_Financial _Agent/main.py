@@ -1,13 +1,11 @@
 from custom_agents.web_search_agent import WebSearchAgent
 from rich.console import Console
 from rich.markdown import Markdown
-
-import logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
+from agno.utils.log import logger
 console = Console()
 # Initialize the agent once, outside the loop
+
+
 web_search_agent = WebSearchAgent([])
 conversation_history = []
 

@@ -1,16 +1,15 @@
 from textwrap import dedent
+from typing import Iterator
 from agno.agent import Agent
+from agno.agent import RunResponse
 from agno.models.groq import Groq
 from agno.tools.duckduckgo import DuckDuckGoTools
 from agno.tools.newspaper4k import Newspaper4kTools
+from agno.utils.log import logger
 from custom_agents.prompt import web_search_prompt
 from dotenv import load_dotenv
 
 import os
-
-import logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 load_dotenv()
@@ -24,7 +23,7 @@ class WebSearchAgent:
     def web_search_agent(self):
         logger.info(f"web Searching your: {self.query}")
         try:
-            web_search_agent = Agent(
+            self.web_search_agent = Agent(
                 model=Groq(
                     id="deepseek-r1-distill-qwen-32b",    
                     api_key=GROQ_API),
@@ -34,14 +33,24 @@ class WebSearchAgent:
                 tools=[DuckDuckGoTools(), Newspaper4kTools()],
                 
             )
-
-            response = web_search_agent.run(self.query)
-            return response
-
+            return self
             
         except Exception as e:
             logger.error(f"Error in web_search_agent: {e}")
             raise e
+    
+    def run(self) -> Iterator[RunResponse]:
+        logger.info(f"Running web_search_agent: {self.query}")
+        inital_response: RunResponse = self.web_search_agent.run(self.query)
+        if inital_response is None or not inital_response.content:
+            yield RunResponse(
+                run_id= self.run_id,
+                content= "No response from the web_search_agent",
+
+            )
+            return
+        
+        
         
 
         
