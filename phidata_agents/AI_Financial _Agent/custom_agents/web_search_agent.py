@@ -1,9 +1,9 @@
 from textwrap import dedent
 from agno.agent import Agent
-from agno.models import groq
+from agno.models.groq import Groq
 from agno.tools.duckduckgo import DuckDuckGoTools
 from agno.tools.newspaper4k import Newspaper4kTools
-from agents.prompt import web_search_prompt
+from custom_agents.prompt import web_search_prompt
 from dotenv import load_dotenv
 
 import os
@@ -17,16 +17,16 @@ load_dotenv()
 GROQ_API = os.getenv("GROQ_API")
 
 class WebSearchAgent:
-    def __init__(self):
+    def __init__(self, query):
         logger.info("Initializing WebSearchAgent")
-        pass
+        self.query = query
 
-    def web_search_agent(self, query):
-        logger.info(f"web Searching your: {query}")
+    def web_search_agent(self):
+        logger.info(f"web Searching your: {self.query}")
         try:
             web_search_agent = Agent(
-                model=groq(
-                    model_name="llama3-8b-8192",
+                model=Groq(
+                    id="deepseek-r1-distill-qwen-32b",    
                     api_key=GROQ_API),
                 debug_mode= True,
                 markdown= False,
@@ -35,14 +35,13 @@ class WebSearchAgent:
                 
             )
 
-            response = web_search_agent.run(query)
+            response = web_search_agent.run(self.query)
             return response
 
             
         except Exception as e:
             logger.error(f"Error in web_search_agent: {e}")
-            return dedent(f"""
-            I'm sorry, I couldn't find any information on that topic.
-            Please try again with a different query.
-            """
-            )
+            raise e
+        
+
+        
