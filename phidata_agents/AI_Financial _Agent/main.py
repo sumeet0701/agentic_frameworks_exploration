@@ -1,6 +1,11 @@
 from custom_agents.web_search_agent import WebSearchAgent
 from rich.console import Console
 from rich.markdown import Markdown
+
+import logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 console = Console()
 # Initialize the agent once, outside the loop
 web_search_agent = WebSearchAgent([])
@@ -10,6 +15,8 @@ while True:
     input_text = input("Enter your query string: \n\n")
     console.print(Markdown(f"**User:** {input_text}"))
     if input_text == "exit":
+        logger.info("Thank you for using the AI Financial Agent")
+        
         break
 
     conversation_history.append({"role": "user", "content": input_text})
