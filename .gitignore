@@ -170,3 +170,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+
+random
+webpage_2.html
+webpage.html
